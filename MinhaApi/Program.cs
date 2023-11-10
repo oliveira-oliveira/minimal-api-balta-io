@@ -8,20 +8,25 @@ app.MapGet("/nome={nome}", (string nome) =>
     return Results.Ok($"Olá, {nome}");
 });
 
-app.MapGet("/nome/{nome}", (string nome) => 
+List<Usuario> listaUsuarios = new List<Usuario>();
+
+app.MapGet("/usuario/", () => 
 {
-    return Results.Ok($"Olá, {nome}");
+    return Results.Ok(listaUsuarios);
 });
 
-app.MapPost("", (Usuario usuario) => 
+app.MapPost("/", (Usuario usuario) => 
 {
+    usuario.Id = listaUsuarios.Count + 1;
+    listaUsuarios.Add(usuario);
+
     return Results.Ok(usuario);
 });
 
 app.Run();
 
 public class Usuario
-{    
+{
     public int Id { get; set; }
     public string Nome { get; set; }
 }
