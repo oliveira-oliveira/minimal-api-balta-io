@@ -19,13 +19,13 @@ namespace MinhaApi.Controllers
         }
 
         [HttpGet("/{id:Guid}")]
-        public IActionResult GetById([FromHeader] Guid id)
+        public IActionResult GetById([FromRoute] Guid id)
         {
             var usuario = listaUsuarios.FirstOrDefault(x => x.Id == id);
-            return Ok(usuario);
-            
-            //return BadRequest("Id inválido");
-            
+            if (usuario == null)
+                return NotFound();
+
+            return Ok(usuario);            
         }
 
         [HttpPost("/")]
@@ -57,17 +57,15 @@ namespace MinhaApi.Controllers
         }
         
         [HttpDelete("/{id:Guid}")]
-        public IActionResult Delete([FromRoute] Guid id, Usuarios usuarios)
+        public IActionResult Delete([FromRoute] Guid id)
         {
-            if (usuarios == null)
-            {
-                return BadRequest("Usuário inválido.");
-            }
-
             var delete = listaUsuarios.FirstOrDefault(x => x.Id == id);
+            if (delete == null)
+                return NotFound();
+
             listaUsuarios.Remove(delete);
 
-            return Ok();
+            return Ok(delete);
         }
         
     }
