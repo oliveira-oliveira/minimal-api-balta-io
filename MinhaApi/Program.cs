@@ -1,6 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+builder.Services.AddControllers();
 
+var app = builder.Build();
+app.MapControllers();
+
+/*
 app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/nome={nome}", (string nome) => 
@@ -22,11 +26,12 @@ app.MapPost("/", (Usuario usuario) =>
 
     return Results.Ok(usuario);
 });
+*/
 
 app.Run();
 
-public class Usuario
-{
-    public int Id { get; set; }
-    public string Nome { get; set; }
-}
+// public class Usuario
+// {
+//     public int Id { get; set; }
+//     public string Nome { get; set; }
+// }
